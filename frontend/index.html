@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Slackr</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <!-- Bulma CsS Library: https://bulma.io/ -->
+  <link rel="stylesheet" type="text/css" media="screen" href="styles/bulma.min.css" />
+  <!-- Fontawesome Icon Library: https://fontawesome.com/ -->
+  <link href="styles/fontawesome-all.min.css" rel="stylesheet">
+  <link href="styles/styles.css" rel="stylesheet">
+
+  <script type="module" src="src/helpers.js"></script>
+</head>
+
+<body>
+  <header class="section">
+    <h1 class="title is-1 is-size-2-mobile has-text-centered">Slackr</h1>
+  </header>
+  <main role="main">
+    <!-- app goes here -->
+  </main>
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p><strong>Slackr</strong> by Simon Keung in partial fufillment of requirements of COMP6080 Front Front-End
+        Programing at
+        The University of New South Wales.</p>
+    </div>
+  </footer>
+
+  <template id="tmpl-login">
+    <!-- Example login form from https://bulma.io/documentation/form/general/ -->
+    <div class="section" id="sec-login">
+      <form>
+        <div class="columns">
+          <div class="column is-half is-hidden-mobile">
+            <h3 class="title is-3">Welcome to Slackr</h3>
+            <h4 class="title is-4">Please login to continue.</h4>
+          </div>
+          <div class="column">
+            <h3 class="title is-size-3 is-hidden-tablet">Login</h3>
+            <div class="field">
+              <label class="label" for="email">Email</label>
+              <p class="control has-icons-left has-icons-right">
+                <input class="input" type="email" name="email" id="email" placeholder="e.g. bob@unsw.edu.au">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-regular fa-envelope"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+              <label class="label" for="password">Password</label>
+              <p class="control has-icons-left">
+                <input class="input" type="password" name="password" id="password" placeholder="e.g. hunter2">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control">
+                <button class="button is-primary" id="btn-login" type="submit">
+                  Login
+                </button>
+                <button class="button is-link" id="btn-register">
+                  Register Account
+                </button>
+              </p>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </template>
+  <template id="tmpl-register">
+    <div class="section" id="sec-register">
+      <form>
+        <div class="columns">
+          <div class="column is-half is-hidden-mobile">
+            <h3 class="title is-3">Register an account</h3>
+            <h4 class="title is-4">By registering your account, you can make use of Slackr's great functionality.</h4>
+          </div>
+          <div class="column">
+            <h3 class="title is-size-3 is-hidden-tablet">Register</h3>
+            <div class="field">
+              <label class="label" for="email">Email</label>
+              <p class="control has-icons-left has-icons-right">
+                <input class="input" type="email" name="email" id="email" placeholder="e.g. bob@unsw.edu.au">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-regular fa-envelope"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+              <label class="label" for="name">Name</label>
+              <p class="control has-icons-left has-icons-right">
+                <input class="input" type="text" name="name" id="name" placeholder="e.g. Bob">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-regular fa-user-tag"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+              <label class="label" for="password">Password</label>
+              <p class="control has-icons-left">
+                <input class="input" type="password" name="password" id="password" placeholder="e.g. hunter2">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+              <label class="label" for="confirm-password">Confirm Password</label>
+              <p class="control has-icons-left">
+                <input class="input" type="password" name="confirm-password" id="confirm-password"
+                  placeholder="e.g. hunter2">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control">
+                <button class="button is-primary" id="btn-register" type="submit">
+                  Register Account
+                </button>
+                <button class="button is-link" id="btn-login">
+                  Back to Login
+                </button>
+              </p>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </template>
+
+  <template id="tmpl-2-col">
+    <div class="section" id="sec-home">
+      <div class="columns">
+        <div class="column is-one-quarter">
+          <aside class="menu" id="menu-channels">
+            <p class="menu-label">
+              Channels
+            </p>
+            <ul class="menu-list">
+              <li id="lnk-create-channel"><a href="#create">Create a Channel</a></li>
+              <li>
+                <p>Public Channels</p>
+                <ul id="public-channels">
+
+                </ul>
+              </li>
+              <li>
+                <p>Private Channels</p>
+                <ul id="private-channels">
+
+                </ul>
+              </li>
+            </ul>
+
+            <p class="menu-label">
+              Account
+            </p>
+            <ul class="menu-list">
+              <li><a href="/#profile">My Profile</a></li>
+              <li id="lnk-logout"><a>Logout</a></li>
+            </ul>
+            <p class="menu-label">
+              Notifications
+            </p>
+            <ul class="menu-list">
+              <li><a id="lnk-notifications">Activate Notifications</a></li>
+            </ul>
+          </aside>
+        </div>
+        <div class="column" id="right">
+          <h3 class="title is-3">Welcome back.</h3>
+          <p>Select a channel to continue.</p>
+        </div>
+      </div>
+
+    </div>
+  </template>
+
+  <template id="tmpl-create-channel">
+    <h3 class="title is-size-3">Create a Channel</h3>
+    <form>
+      <div class="field">
+        <label for="cc-name" class="label">Name</label>
+        <div class="control">
+          <input class="input" type="text" placeholder="Cars and hardware" name="name" id="cc-name">
+        </div>
+      </div>
+      <div class="field">
+        <label for="cc-description" class="label">Description</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="Channel for lovers of cars and hardware"
+            name="description" id="cc-description"></textarea>
+        </div>
+      </div>
+      <div class="field">
+        <label for="cc-private" class="label">Type</label>
+        <div class="control">
+          <div class="select">
+            <select name="private" id="cc-private">
+              <option value="false">Public</option>
+              <option value="true">Private</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <button class="button is-primary" type="submit">
+            Create Channel
+          </button>
+        </div>
+      </div>
+    </form>
+  </template>
+
+  <template id="tmpl-edit-channel">
+    <h3 class="title is-size-3">Edit Channel</h3>
+    <form>
+      <div class="field">
+        <label for="channel-name-input" class="label">Name</label>
+        <div class="control">
+          <input class="input" type="text" placeholder="Name" name="name" id="channel-name-input">
+        </div>
+      </div>
+      <div class="field">
+        <label for="channel-description-input" class="label">Description</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="Description" name="description"
+            id="channel-description-input"></textarea>
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <button class="button is-primary" type="submit">
+            Update
+          </button>
+        </div>
+      </div>
+    </form>
+  </template>
+
+  <template id="tmpl-view-channel">
+    <h3 class="title is-size-3">Channel: <span id="channel-name"></span></h3>
+
+    <div class="box">
+      <span class="tag is-info is-pulled-right" id="channel-type">Private</span>
+      <p><strong>Description: </strong><span id="channel-description"></span></p>
+
+      <p><strong>Creation timestamp: </strong><span id="channel-timestamp"></span></p>
+
+      <p><strong>Creator: </strong><span id="channel-creator"></span></p>
+      <button class="button is-info mb-2 mt-2  is-small" type="button" id="channel-invite-btn">
+        Invite User
+      </button>
+      <button class="button is-primary mb-2 mt-2  is-small" type="button" id="channel-edit-btn">
+        Edit Details
+      </button>
+
+      <button class="button is-light mb-2 mt-2  is-small" type="button" id="channel-leave-btn">
+        Leave Channel
+      </button>
+    </div>
+    <div class="box" id="new-message">
+      <h4>New Message</h4>
+    </div>
+    <div id="messages" class="is-flex is-flex-direction-column">
+    </div>
+    <div class="row">
+      <div class="column is-pulled-left mb-3" id="loading"></div>
+    </div>
+  </template>
+
+  <template id="tmpl-message-form">
+    <form>
+      <div class="tabs is-toggle">
+        <ul class="ml-0">
+          <li class="text-tab">
+            <a>
+              <span class="icon is-small"><i class="fas fa-comment" aria-hidden="true"></i></span>
+              <span>Text</span>
+            </a>
+          </li>
+          <li class="image-tab">
+            <a>
+              <span class="icon is-small"><i class="fas fa-image" aria-hidden="true"></i></span>
+              <span>Photo</span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+      <div class="message-form-tab"></div>
+      <button class="button mb-2 mt-2" type="submit">Post</button>
+    </form>
+
+  </template>
+  <template id="tmpl-message-form-image">
+    <div class="field">
+
+      <div class="file has-name mb-3">
+        <label class="file-label">
+          <input class="file-input" type="file" name="image">
+          <span class="file-cta">
+            <span class="file-icon">
+              <i class="fas fa-upload"></i>
+            </span>
+            <span class="file-label">
+              Choose a file…
+            </span>
+          </span>
+          <span class="file-name">
+            No file selected
+          </span>
+        </label>
+      </div>
+    </div>
+  </template>
+  <template id="tmpl-message-form-text">
+    <div class="field">
+
+      <div class="control">
+        <textarea aria-label="New message text content" class="textarea" placeholder="Hi, everyone..."
+          name="message"></textarea>
+      </div>
+    </div>
+    </form>
+
+  </template>
+  <template id="tmpl-message">
+    <div class="card mb-1 message-card">
+    </div>
+  </template>
+  <template id="tmpl-message-content">
+    <div class="card-content">
+      <button class="button is-primary mb-2 mt-2 is-pulled-right is-small message-edit" type="button">
+        Edit
+      </button>
+      <button class="button is-light mb-2 mt-2 is-pulled-right is-small message-delete" type="button">
+        Delete
+      </button>
+      <div class="is-hidden-tablet">
+        <figure class="image is-96x96">
+          <img class="is-96x96 message-sender-profile-photo" src="/images/placeholder-profile.png"
+            alt="Profile picture">
+        </figure>
+      </div>
+
+      <div class="media">
+        <div class="media-left is-hidden-mobile">
+          <figure class="image is-96x96">
+            <img class="message-sender-profile-photo-2" src="/images/placeholder-profile.png" alt="Profile picture">
+          </figure>
+        </div>
+        <div class="media-content ">
+          <p class="title is-3"><a class="message-sender"></a></p>
+          <p class="subtitle is-6">Created: <span class="message-timestamp"></span> <br />
+            <span class="message-edited-timestamp"></span>
+          </p>
+        </div>
+
+
+      </div>
+
+      <div class="content">
+        <span class="message-content"></span>
+      </div>
+      <div class="content">
+        <button class="button is-info is-small message-pin is-pulled-right" type="button">
+          Pin
+        </button>
+
+        <div class="">
+          <span aria-label="grinning face reaction" class="tag react" data-id="0"><a><span
+                class="mr-2 react-icon">&#x1F600;</span><span class="react-count">0</span></a></span>
+          <span aria-label="grinning face with sweat reaction" class="tag react" data-id="1"><a><span
+                class="mr-2 react-icon">&#x1F605;</span><span class="react-count">0</span></a></span>
+          <span aria-label="upside-down face reaction" class="tag react" data-id="2"><a><span
+                class="mr-2 react-icon">&#x1F643;</span><span class="react-count">0</span></a></span>
+          <span aria-label="open mouth reaction" class="tag react" data-id="3"><a><span
+                class="mr-2 react-icon">&#x1F62E;</span><span class="react-count">0</span></a></span>
+        </div>
+
+
+      </div>
+
+    </div>
+  </template>
+  <template id="tmpl-modal">
+    <div id="modal" class="modal is-active">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="box">
+          <p id="modal-text" role="alert"></p>
+        </div>
+      </div>
+      <button class="modal-close" aria-label="close"></button>
+    </div>
+  </template>
+  <template id="tmpl-modal-invite">
+    <div id="modal" class="modal is-active">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="box">
+          <form id="invite-form" class="is-flex is-flex-direction-column">
+
+            <div class="select is-multiple">
+              <label for="user-selection" class="label">Select users to invite</label>
+              <select name="userSelection" id="user-selection" multiple size="5">
+              </select>
+            </div>
+
+            <button class="button is-primary" id="btn-invite" type="submit">
+              Invite
+            </button>
+          </form>
+        </div>
+      </div>
+      <button class="modal-close" aria-label="close"></button>
+    </div>
+  </template>
+  <template id="tmpl-modal-image">
+    <div id="modal" class="modal is-active">
+      <div class="modal-background"></div>
+      <div class="modal-content modal-image">
+          <div class="box">
+          <p class="mb-1">Posted at <span class="modal-timestamp"></span> by <span class="modal-sender"></span></p>
+          <p class="image mb-2 is-4by3">
+            <img src="" alt="User Submmited Image">
+          </p>
+          <div class="field is-grouped is-grouped-centered">
+            <button class="button is-primary mr-1" id="btn-modal-back" type="submit">
+              &#x2190; Back
+
+            </button>
+            <button class="button is-primary ml-1" id="btn-modal-next" type="submit">
+              Next &#x2192;
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <button class="modal-close" aria-label="close"></button>
+    </div>
+  </template>
+  <template id="tmpl-my-profile">
+    <h3 class="title is-size-3">My Profile</h3>
+    <div class="box">
+
+      <form id="update-details">
+        <h4 class="title is-size-4">Update Details</h3>
+          <div class="field">
+            <label for="ud-name" class="label">Name</label>
+            <div class="control">
+              <input class="input" type="text" name="name" id="ud-name">
+            </div>
+          </div>
+          <div class="field">
+            <label for="ud-description" class="label">Bio</label>
+            <div class="control">
+              <textarea class="textarea" name="bio" id="ud-description"></textarea>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label" for="email">Email</label>
+            <input class="input" type="email" name="email" id="email">
+
+          </div>
+
+          <div class="field">
+            <div class="control">
+              <button class="button is-primary" type="submit">
+                Update Profile
+              </button>
+            </div>
+          </div>
+      </form>
+
+
+    </div>
+
+
+    <div class="box">
+      <form id="update-password">
+        <h4 class="title is-size-4">Update Password</h3>
+          <div class="field">
+            <label class="label" for="password">
+              New password
+              <span class="icon is-small is-right">
+                <i class="fas fa-eye"></i>
+              </span>
+            </label>
+            <p class="control has-icons-right">
+              <input class="input" type="password" name="password" id="password" placeholder="e.g. hunter2">
+            </p>
+
+          </div>
+          <div class="field">
+            <div class="control">
+              <button class="button is-primary" type="submit">
+                Update Password
+              </button>
+            </div>
+          </div>
+      </form>
+    </div>
+
+
+    <div class="box">
+      <form id="update-photo">
+        <h4 class="title is-size-4">Update Photo</h4>
+        <div class="box">
+          <div class="columns">
+            <div class="column is-one-quarter">
+              <figure class="image is-96x96 mb-3">
+                <img class="is-96x96" src="/images/placeholder-profile.png" alt="Profile picture">
+              </figure>
+            </div>
+            <div class="column">
+              <div class="file has-name mb-3">
+                <label class="file-label">
+                  <input class="file-input" type="file" name="image">
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                      Choose a file…
+                    </span>
+                  </span>
+                  <span class="file-name">
+                    No file selected
+                  </span>
+                </label>
+              </div>
+              <div class="field">
+                <div class="control">
+                  <button class="button is-primary" type="submit">
+                    Update Profile Picture
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      </form>
+    </div>
+  </template>
+  <template id="tmpl-view-profile">
+    <h3 class="title is-size-3">Profile: <span id="profile-name"></span></h3>
+    <div class="box">
+      <div class="columns">
+        <div class="column is-one-quarter">
+          <figure class="image is-96x96 mb-3">
+            <img id="profile-photo" class="is-96x96" src="/images/placeholder-profile.png" alt="Profile picture">
+          </figure>
+        </div>
+        <div class="column">
+          <p><strong>Bio: </strong><span id="profile-bio"></span></p>
+          <p><strong>Email: </strong><span id="profile-email"></span></p>
+        </div>
+      </div>
+    </div>
+
+
+  </template>
+  <script type="module" src="src/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+.menu-list p {
+    border-radius: 2px;
+    color: #4a4a4a;
+    display: block;
+    padding: 0.5em 0.75em;
+}
+
+span.react .react-icon {
+    transition: 0.8s;
+    line-height: 20px;
+}
+
+span.react:hover .react-icon {
+    font-size: 20px;
+}
+
+span.reacted {
+    background-color: #bbbbbb;
+}
+
+.card .media-content {
+    overflow-x: clip;
+}
+
+.message-card {
+    animation: fade-in 1.5s;
+}
+
+.message-card img {
+    max-height: 40vh;
+}
+
+
+.pinned {
+    background-color: rgb(242, 244, 255);
+    order: -1;
+}
+
+.modal select {
+    width: 100%;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
